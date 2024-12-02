@@ -1,0 +1,54 @@
+<div class="top-bar">
+    <button mat-flat-button color="primary" routerLink="/users/create">New user</button>
+    <div style="flex-grow: 1;">
+        <!-- spacer -->
+    </div>
+    <mat-form-field class="page-size-form-field">
+        <mat-select id="page-size-select" [value]="pageSize" (selectionChange)="updatePageSize($event.value)">
+            <mat-option *ngFor="let sizeOption of pageSizeOptions" [value]="sizeOption">
+                {{sizeOption}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-label htmlFor="page-size-select">rows</mat-label>
+</div>
+
+<div class="table-container">
+    <div class="loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+        <div class="loader" *ngIf="isRateLimitReached">
+            Error getting data
+        </div>
+    </div>
+    <table mat-table [dataSource]="data" matSort matSortDisableClear matSortDirection="desc">
+        <ng-container matColumnDef="username">
+            <th mat-header-cell *matHeaderCellDef>Username</th>
+            <td mat-cell *matCellDef="let row">{{row.username}}</td>
+        </ng-container>
+        <ng-container matColumnDef="full_name">
+            <th mat-header-cell *matHeaderCellDef>Full Name</th>
+            <td mat-cell *matCellDef="let row">{{row.first_name}} {{row.last_name}}</td>
+        </ng-container>
+        <!-- add status here -->
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let row">{{row.email}}</td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let row"
+                [ngStyle]="{'color': (row.id_status === 1 || row.id_status === 2) ? 'green' : 'red'}">
+                {{getStatusDescription(row.id_status)}}</td>
+        </ng-container>
+        <ng-container matColumnDef="created_date">
+            <th mat-header-cell *matHeaderCellDef>Creation Date</th>
+            <td mat-cell *matCellDef="let row">{{row.created_date | date:'yyyy/MM/dd'}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
+<mat-paginator exadsStylePaginator [length]="resultsLength" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize"
+    showFirstLastButtons>
+</mat-paginator>

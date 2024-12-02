@@ -1,0 +1,6 @@
+<div *ngIf="data.successful" class="successful">
+    <mat-icon>done</mat-icon> <span>{{data.message}}</span>
+</div>
+<div *ngIf="!data.successful" class="failed">
+    <mat-icon>clear</mat-icon> <span>{{data.message}}</span>
+</div>

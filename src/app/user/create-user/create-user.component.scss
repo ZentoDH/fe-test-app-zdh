@@ -1,0 +1,28 @@
+mat-form-field {
+    width: 100%;
+}
+
+form {
+    margin: 20px;
+}
+
+.form-fields {
+    background-color: #ffffff;
+    margin: 20px 0;
+    padding:10px;
+    border: 1px solid #e3e3e3;
+}
+.buttons {
+    display: flex;
+}
+
+@media only screen and (min-width: 992px) {
+    .form-fields {
+        div {
+            display: flex;
+            mat-form-field:first-of-type {
+                margin-right: 20px;
+            }
+        }
+    }
+}

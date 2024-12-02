@@ -1,0 +1,60 @@
+<form [formGroup]="profileForm" (submit)="createUser($event)">
+    <h1>Add New User</h1>
+    <div class="form-fields">
+        <mat-form-field appearance="fill">
+            <mat-label>Username</mat-label>
+            <input matInput type="text" formControlName="username">
+            <mat-error *ngIf="profileForm.get('username').hasError('notUnique')">
+                This username already exists. It can't be repeated.
+            </mat-error>
+            <mat-error *ngIf="profileForm.get('username').hasError('required')">
+                This field is required
+            </mat-error>
+            <mat-error *ngIf="profileForm.get('username').hasError('pattern')">
+                The characters {{ '{}"[].!' }} are not allowed
+            </mat-error>
+            <mat-error
+                *ngIf="profileForm.get('username').hasError('minlength') || profileForm.get('username').hasError('maxlength')">
+                Username must be between 3 and 20 characters
+            </mat-error>
+        </mat-form-field>
+
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>First Name</mat-label>
+                <input matInput type="text" formControlName="first_name">
+                <mat-error *ngIf="profileForm.get('first_name').hasError('required')">
+                    This field is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Last Name (Optional)</mat-label>
+                <input matInput type="text" formControlName="last_name">
+            </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="fill">
+            <mat-label>email</mat-label>
+            <input matInput type="email" formControlName="email" [errorStateMatcher]="matcher">
+            <mat-error *ngIf="profileForm.get('email').hasError('email')">
+                Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="profileForm.get('email').hasError('required')">
+                This field is required
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="buttons">
+        <button mat-flat-button color="accent" type="button" routerLink="/users">Cancel</button>
+        <div style="flex-grow: 1;">
+            <!-- spacer -->
+        </div>
+        <button mat-flat-button type="submit" color="primary" [disabled]="profileForm.invalid || isCreating">
+            <mat-spinner style="position: absolute;left: calc(50% - 10px); top: calc(50% - 10px);" [diameter]="20" *ngIf="isCreating">
+            </mat-spinner>
+            <span>Add new user</span>
+        </button>
+    </div>
+
+</form>

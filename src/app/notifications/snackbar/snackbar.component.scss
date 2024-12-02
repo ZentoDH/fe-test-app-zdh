@@ -1,0 +1,23 @@
+* {
+    color: black;
+}
+
+.successful, .failed {
+    display: flex;
+    align-items: center;
+}
+
+.successful mat-icon, .failed mat-icon {
+    color: white;
+    padding: 5px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.successful mat-icon {
+    background-color: green;
+}
+
+.failed mat-icon {
+    background-color: red;
+}
